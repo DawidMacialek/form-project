@@ -1,0 +1,27 @@
+.computer-type {
+  display: flex;
+  margin: 15px;
+}
+
+.form-group {
+  margin: 1px;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  align-items: center;  
+}
+.form-label {
+  margin: 5px;
+  min-width: 100px;
+}
+.form-price-label {
+  max-width: 100px !important;
+}
+.form-dollar {
+  padding-right: 8px !important;
+  padding-left: 8px !important;
+}
+.form-option-label {
+  width: 140px !important;
+  text-transform: uppercase;
+}
