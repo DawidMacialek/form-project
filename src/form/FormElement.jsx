@@ -1,16 +1,21 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Row, Col, InputGroup } from 'react-bootstrap';
+import { useReRenderFlagCall } from '../context/context.js';
 
 function FormElement({ category, currentData, isChecked }) {
   const [formValues, setFormValues] = useState(currentData);
+  const renderComponentCall = useReRenderFlagCall();
 
   useEffect(() => {
     setFormValues(currentData);
   }, [currentData]);
-
+  function resetInputValues() {
+    setFormValues(currentData);
+  }
   function handleOnInputsChange(e) {
     e.preventDefault();
-    const { value, name, cat } = e.target;
+    const { value, name } = e.target;
 
     setFormValues((prevState) => {
       return prevState.map((element) => {
@@ -34,13 +39,66 @@ function FormElement({ category, currentData, isChecked }) {
   }
   function handleOnSubmit(e) {
     e.preventDefault();
-    console.log('dane wysłane');
-    
-    const { value, name, cat } = e.target;
-    setFormValues(currentData);
-    
-  }
+    let categoryName = null;
+    if (category === 'computer' && isChecked) {
+      categoryName = 'pc';
+    } else if (category === 'computer' && !isChecked) {
+      categoryName = 'laptop';
+    } else {
+      categoryName = category;
+    }
+    const dataToSend = {
+      [categoryName]: [...formValues],
+    };
+    console.log(dataToSend);
 
+    axios({
+      url: '/send',
+      method: 'POST',
+      data: dataToSend,
+    })
+      .then(() => {
+        console.log('Data has been sent to the server');
+      })
+      .catch(() => {
+        console.log('Internal server error');
+      });
+    resetInputValues();
+    renderComponentCall();
+  }
+  function addAdditionalItem() {
+    let helperArr = [];
+    if (formValues.length < currentData.length + 3) {
+      formValues.forEach((item, index) => {
+        if ((category === 'computer' && !isChecked) || category === 'monitor') {
+          if (index === formValues.length - 2) {
+            helperArr = [
+              ...helperArr,
+              item,
+              { label: `component ${index + 2}`, text: '', price: 0 },
+            ];
+          } else {
+            helperArr.push(item);
+          }
+          setFormValues([...helperArr]);
+        } else {
+          const otherLabel =
+            category === 'computer'
+              ? `component ${index + 2}`
+              : `item ${index + 2}`;
+          setFormValues([
+            ...formValues,
+            { label: otherLabel, text: '', price: 0 },
+          ]);
+        }
+      });
+    } else {
+      alert(
+        'Maximum number of added new item has been reached. Please, use "other" category if you would like to add more items.'
+      );
+      return false;
+    }
+  }
   return (
     <>
       <Form onSubmit={handleOnSubmit}>
@@ -99,6 +157,15 @@ function FormElement({ category, currentData, isChecked }) {
           );
         })}
         <Row xs='auto' className='my-3  justify-content-center'>
+          <Col>
+            <Button
+              onClick={addAdditionalItem}
+              className='p-2 m-2'
+              variant='light'
+            >
+              Add additional item
+            </Button>
+          </Col>
           <Col>
             <Button className='p-2 m-2' variant='primary' type='submit'>
               Submit

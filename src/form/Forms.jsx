@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useState } from 'react';
 
 import FormElement from './FormElement';
@@ -13,10 +13,10 @@ function Forms() {
       computer: {
         pc: [
           { label: 'cpu', text: '', price: 0 },
-          { label: 'videoCard', text: '', price: 0 },
+          { label: 'mother board', text: '', price: 0 },
+          { label: 'video card', text: '', price: 0 },
           { label: 'memory', text: '', price: 0 },
           { label: 'storage', text: '', price: 0 },
-          { label: 'other parts', text: '', price: 0 },
         ],
         laptop: [
           { label: 'brand', text: '' },
@@ -24,7 +24,6 @@ function Forms() {
           { label: 'cpu', text: '' },
           { label: 'screen', text: '' },
           { label: 'storage', text: '' },
-          { label: 'other parts', text: '' },
           { label: '$', price: 0 },
         ],
       },
@@ -51,8 +50,8 @@ function Forms() {
     },
     {
       software: [
-        { label: 'os', text: '', price: 0 },
-        { label: 'other', text: '', price: 0 },
+        { label: 'operation system', text: '', price: 0 },
+        { label: 'office tools', text: '', price: 0 },
       ],
     },
     {
