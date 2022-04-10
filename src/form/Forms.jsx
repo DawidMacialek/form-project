@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-
+import { initData } from '../initData/initData';
 import FormElement from './FormElement';
 import { Form } from 'react-bootstrap';
 
@@ -8,71 +8,16 @@ function Forms() {
   const [category, setCategory] = useState('Pick a category');
   const [isChecked, setIsChecked] = useState(true);
 
-  const data = [
-    {
-      computer: {
-        pc: [
-          { label: 'cpu', text: '', price: 0 },
-          { label: 'mother board', text: '', price: 0 },
-          { label: 'video card', text: '', price: 0 },
-          { label: 'memory', text: '', price: 0 },
-          { label: 'storage', text: '', price: 0 },
-        ],
-        laptop: [
-          { label: 'brand', text: '' },
-          { label: 'model', text: '' },
-          { label: 'cpu', text: '' },
-          { label: 'screen', text: '' },
-          { label: 'storage', text: '' },
-          { label: '$', price: 0 },
-        ],
-      },
-    },
-    {
-      monitor: [
-        { label: 'brand', text: '' },
-        { label: 'model', text: '' },
-        { label: 'size', text: '' },
-        { label: '$', price: 0 },
-      ],
-    },
-    {
-      accesories: [
-        { label: 'mouse', text: '', price: 0 },
-        { label: 'keyboard', text: '', price: 0 },
-      ],
-    },
-    {
-      office: [
-        { label: 'desk', text: '', price: 0 },
-        { label: 'chair', text: '', price: 0 },
-      ],
-    },
-    {
-      software: [
-        { label: 'operation system', text: '', price: 0 },
-        { label: 'office tools', text: '', price: 0 },
-      ],
-    },
-    {
-      other: [
-        { label: 'item 1', text: '', price: 0 },
-        { label: 'item 2', text: '', price: 0 },
-        { label: 'item 3', text: '', price: 0 },
-      ],
-    },
-  ];
-
-  const index = data.findIndex((item) => item.hasOwnProperty(category));
+  const index = initData.findIndex((item) => item.hasOwnProperty(category));
 
   let currentData = [];
   if (category !== 'Pick a category') {
     if (category === 'computer' && isChecked) {
-      currentData = data[index][category].pc;
+      currentData = initData[index][category].pc;
     } else if (category === 'computer' && !isChecked) {
-      currentData = data[index][category].laptop;
+      currentData = initData[index][category].laptop;
     } else {
-      currentData = data[index][category];
+      currentData = initData[index][category];
     }
   }
 
@@ -85,16 +30,17 @@ function Forms() {
   }
 
   return (
-    <div>
-      <h1>Customize your dev workplace</h1>
+    <div className='form-container'>
+      <h3>Customize your dev workplace</h3>
       <Form>
         <Form.Select
+          className='select-category'
           size='lg'
           aria-label='select category'
           onChange={handleOnchangeCategory}
         >
           <option>Pick a category</option>
-          {data.map((item, i) => {
+          {initData.map((item, i) => {
             return (
               <option key={i} value={Object.keys(item)}>
                 {Object.keys(item)}
@@ -106,7 +52,7 @@ function Forms() {
       {category !== 'Pick a category' && (
         <>
           {category === 'computer' ? (
-            <Form onChange={handleOnChangeIsChecked}>
+            <Form className='computer-type' onChange={handleOnChangeIsChecked}>
               <Form.Check
                 inline
                 label='PC'

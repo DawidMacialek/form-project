@@ -50,7 +50,6 @@ function FormElement({ category, currentData, isChecked }) {
     const dataToSend = {
       [categoryName]: [...formValues],
     };
-    console.log(dataToSend);
 
     axios({
       url: '/send',
@@ -94,14 +93,14 @@ function FormElement({ category, currentData, isChecked }) {
       });
     } else {
       alert(
-        'Maximum number of added new item has been reached. Please, use "other" category if you would like to add more items.'
+        'Maximum number of added new items has been reached. Please, use "other" category if you would like to add more items.'
       );
       return false;
     }
   }
   return (
     <>
-      <Form onSubmit={handleOnSubmit}>
+      <Form onSubmit={handleOnSubmit} className='form'>
         {formValues.map((option, i) => {
           return (
             <>
@@ -160,14 +159,18 @@ function FormElement({ category, currentData, isChecked }) {
           <Col>
             <Button
               onClick={addAdditionalItem}
-              className='p-2 m-2'
+              className='p-2 m-2 add-item-btn'
               variant='light'
             >
               Add additional item
             </Button>
           </Col>
           <Col>
-            <Button className='p-2 m-2' variant='primary' type='submit'>
+            <Button
+              className='p-2 m-2 submit-item-btn'
+              variant='primary'
+              type='submit'
+            >
               Submit
             </Button>
           </Col>

@@ -1,8 +1,27 @@
+/* form styling */
+.form-container {
+  padding: 20px 50px 0 50px;
+}
+.form-container h3 {
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.select-category {
+  max-width: 500px;
+  margin: 30px auto;
+  text-transform: uppercase;
+  font-size: 18px;
+}
 .computer-type {
   display: flex;
-  margin: 15px;
+  margin: 10px 30px;
 }
-
+.form {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
 .form-group {
   margin: 1px;
   display: flex;
@@ -10,10 +29,7 @@
   flex-direction: row;
   align-items: center;
 }
-.form-label {
-  margin: 5px;
-  min-width: 100px;
-}
+
 .form-price-label {
   max-width: 100px !important;
 }
@@ -48,9 +64,78 @@
 .item-label {
   width: 150px !important;
 }
-.item-text {
-}
+
 .item-price {
   width: 180px !important;
+  text-align: right;
+  padding-right: 5% !important;
+}
+.total-price {
+  text-align: right !important;
+  padding-right: 5% !important;
+  text-transform: uppercase;
+  background-color: pink;
+}
+.total-price-span {
+  font-weight: 700;
+}
+.total-costs {
   text-align: center;
+  text-transform: uppercase;
+  font-size: 26px;
+  border-top: 2px solid #000;
+  margin-bottom: 100px;
+}
+@media (max-width: 700px) {
+  .form-container {
+    padding: 20px 0 0 0;
+  }
+  .form input {
+    font-size: 14px !important;
+  }
+  .form-price-label {
+    max-width: 50px !important;
+    font-size: 14px;
+  }
+  .form-dollar {
+    font-size: 14px;
+    padding-right: 6px !important;
+    padding-left: 6px !important;
+  }
+  .form-option-label {
+    font-size: 14px;
+    width: 120px !important;
+  }
+  .add-item-btn {
+    font-size: 14px !important;
+  }
+  .submit-item-btn {
+    font-size: 14px !important;
+  }
+  .select-category {
+    max-width: 500px;
+    font-size: 14px;
+  }
+  .item-index {
+    width: 40px !important;
+  }
+  .delete-btn {
+    font-size: 20px;
+  }
+
+  .item-index {
+    width: 40px !important;
+  }
+  .item-label {
+    width: 110px !important;
+  }
+
+  .item-price {
+    width: 100px !important;
+  }
+
+  .total-costs {
+    font-size: 22px;
+    border-top: 1px solid #000;
+  }
 }
