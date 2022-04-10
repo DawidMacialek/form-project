@@ -8,10 +8,13 @@ const routes = require('./routes/api');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/', routes);
-app.use(express.static(path.resolve(__dirname, '../build')));
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
-});
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.resolve(__dirname, '../build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+  });
+}
 
 const server = app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
