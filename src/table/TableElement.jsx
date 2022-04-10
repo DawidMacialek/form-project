@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, Spinner } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import { useReRenderFlagCall } from '../context/context.js';
 
 function TableElement({ dataToShow }) {
@@ -59,89 +59,93 @@ function TableElement({ dataToShow }) {
   return (
     <div className='table-container'>
       <Table striped bordered hover size='sm' responsive='sm'>
-        {upToDateData ? (
-          upToDateData.map((item, index) => {
-            const category = Object.keys(item)[0];
-            let compFlag = null;
-            if (category === 'monitor' || category === 'laptop') {
-              compFlag = true;
-            } else {
-              compFlag = false;
-            }
-            return (
-              <>
-                <thead>
-                  <tr>
-                    <th className='category-heading' colSpan={2}>
-                      {category}
-                    </th>
-                    <th>Details</th>
-                    <th>
-                      <div
-                        data-index={`${category}${index}`}
-                        className='delete-btn'
-                        onClick={handleOnClickDeleteCategory}
-                      >
-                        X
-                      </div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.values(item).map((element) => {
-                    return (
-                      <>
-                        {element.map((item, index) => {
-                          return (
-                            <>
-                              <tr>
-                                {compFlag && item.label !== '$' ? (
-                                  <>
+        {upToDateData
+          ? upToDateData.map((item, index) => {
+              const category = Object.keys(item)[0];
+              let compFlag = null;
+              if (category === 'monitor' || category === 'laptop') {
+                compFlag = true;
+              } else {
+                compFlag = false;
+              }
+              return (
+                <>
+                  <thead>
+                    <tr>
+                      <th className='category-heading' colSpan={2}>
+                        {category}
+                      </th>
+                      <th>Details</th>
+                      <th>
+                        <div
+                          data-index={`${category}${index}`}
+                          className='delete-btn'
+                          onClick={handleOnClickDeleteCategory}
+                        >
+                          X
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Object.values(item).map((element) => {
+                      return (
+                        <>
+                          {element.map((item, index) => {
+                            return (
+                              <>
+                                <tr>
+                                  {compFlag && item.label !== '$' ? (
+                                    <>
+                                      <td className='item-index'>
+                                        {index + 1}
+                                      </td>
+                                      <td className='item-label'>
+                                        {item.label}
+                                      </td>
+                                      <td colSpan={12} className='item-text'>
+                                        {item.text}
+                                      </td>
+                                    </>
+                                  ) : (
+                                    <td colSpan={12} className='item-price'>
+                                      {item.label !== '$'
+                                        ? ''
+                                        : `TOTAL PRICE: $ ${item.price}`}
+                                    </td>
+                                  )}
+                                </tr>
+                                {!compFlag && (
+                                  <tr>
                                     <td className='item-index'>{index + 1}</td>
                                     <td className='item-label'>{item.label}</td>
-                                    <td colSpan={12} className='item-text'>
-                                      {item.text}
+                                    <td className='item-text'>{item.text}</td>
+                                    <td className='item-price'>
+                                      $ {item.price}
                                     </td>
-                                  </>
-                                ) : (
-                                  <td colSpan={12} className='item-price'>
-                                    {item.label !== '$'
-                                      ? ''
-                                      : `TOTAL PRICE: $ ${item.price}`}
-                                  </td>
+                                  </tr>
                                 )}
-                              </tr>
-                              {!compFlag && (
-                                <tr>
-                                  <td className='item-index'>{index + 1}</td>
-                                  <td className='item-label'>{item.label}</td>
-                                  <td className='item-text'>{item.text}</td>
-                                  <td className='item-price'>$ {item.price}</td>
-                                </tr>
-                              )}
-                            </>
-                          );
-                        })}
-                        {!compFlag && (
-                          <tr>
-                            <td className='total-price' colSpan={12}>
-                              Total price: ${' '}
-                              <span className='total-price-span'>
-                                {countTotalPrice(element)}
-                              </span>
-                            </td>
-                          </tr>
-                        )}
-                      </>
-                    );
-                  })}
-                </tbody>
-              </>
-            );
-          })
-        ) : (
-          <Spinner animation='border' />
-        )}
+                              </>
+                            );
+                          })}
+                          {!compFlag && (
+                            <tr>
+                              <td className='total-price' colSpan={12}>
+                                Total price: ${' '}
+                                <span className='total-price-span'>
+                                  {countTotalPrice(element)}
+                                </span>
+                              </td>
+                            </tr>
+                          )}
+                        </>
+                      );
+                    })}
+                  </tbody>
+                </>
+              );
+            })
+          : ''}
       </Table>
       <div className='total-costs'>
         Total costs: $ {countTotalCosts(upToDateData)}
